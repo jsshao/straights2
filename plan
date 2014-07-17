@@ -1,0 +1,37 @@
+Game (entity, mutable)
+	- 4 Players
+ 	- Deck
+
+
+Player (entity, mutable)
+	- Playable interface
+	- Hand 
+		- Vector of cards
+
+Playable 
+	- Play ()
+		- strategy pattern (user input or first legal card AI)
+	- HUMAN 
+	- Computer
+	
+
+Deck (entity, mutable)
+	- 52 Cards
+	- Shuffle method
+	- Deal
+	- DealtIndex
+
+Card (value, immutable)
+	- Suit
+	- Value (enum)
+
+
+
+THINGS TO DO:
+Player skeleton class
+Implement Game everything
+Playable interface (play)
+	- Human interaction
+	- Computer AI
+
+

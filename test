@@ -1,0 +1,22 @@
+h
+c
+c
+c
+play 8S
+discard 10S
+discard 2D
+play 5D
+play 10C
+play 2C
+discard 10D
+play 10D
+play 3H
+play AC
+discard 3S
+play KH
+discard KH
+discard KC
+discard QH 
+play 5S
+deck
+ragequit
