@@ -1,19 +1,24 @@
 #include <cstdio>
 #include <cstdlib>
 #include "Game.h"
+#include "gtkmm/main.h"
 
 // Main class to start up the game of Straights 
 int main(int argc, char* argv[]) {
-    // If command line argument is passed, seed the RNG with the argument
-    if (argc > 1) {
-        srand48(atoi(argv[1]));
-    } else {
-        srand48(0);
-    }
+    // Initialize seed as 0 originally 
+    srand48(0);
 
+	Gtk::Main  kit( argc, argv );         // Initialize gtkmm with the command line arguments, as appropriate.
+    Model model;                          // Create model
+    Controller controller( &model );      // Create controller
+    View view( &controller, &model );     // Create the view -- is passed handle to controller and model
+    Gtk::Main::run( view );               // Show the window and return when it is closed.
+
+	
+/*
     // Start the game
     Game newGame;
     newGame.start();
-
+*/
     return 0;
 }
