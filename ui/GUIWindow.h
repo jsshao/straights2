@@ -17,6 +17,7 @@ public:
     virtual ~GUIWindow();
 protected:
     Gtk::Image* cards[52];
+    Gtk::Image* hand_cards[13];
     DeckGUI card_manager;
     Gtk::Frame tableFrame;
 	Gtk::Frame playerFrame[4];
@@ -32,7 +33,8 @@ protected:
 	Gtk::Button end_;
 	Gtk::Entry seed_;
 	Gtk::Frame handFrame_;
-	Gtk::Table hand_;	
+	Gtk::HBox hand_;	
+    Gtk::Button handButtons_[13];	
 };
 
 #endif
