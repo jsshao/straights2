@@ -7,6 +7,7 @@
 #include <gtkmm/table.h>
 #include <gtkmm/button.h>
 #include <gtkmm/entry.h>
+#include <gtkmm/frame.h>
 #include <vector>
 #include "DeckGUI.h"
 
@@ -17,12 +18,21 @@ public:
 protected:
     Gtk::Image* cards[52];
     DeckGUI card_manager;
-    Gtk::VBox layout;
+    Gtk::Frame tableFrame;
+	Gtk::Frame playerFrame[4];
+	Gtk::VBox player[4];
+	Gtk::Button switchButton[4];
+	Gtk::Label points[4];
+	Gtk::Label discards[4];
+	Gtk::VBox layout;
+	Gtk::HBox players;
     Gtk::HBox header;
 	Gtk::Table table;
 	Gtk::Button start_;
 	Gtk::Button end_;
 	Gtk::Entry seed_;
+	Gtk::Frame handFrame_;
+	Gtk::Table hand_;	
 };
 
 #endif
