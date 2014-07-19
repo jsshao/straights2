@@ -36,7 +36,6 @@ Game::~Game() {
 void Game::start() {
     while (!hasWon()) {
         newRound();
-        table_.clear();
     }
 	vector<int> winners = winner(); 
     for (size_t i = 0; i < winners.size(); i++) {
@@ -50,6 +49,9 @@ void Game::newRound() {
     for (size_t i = 0; i < players_.size(); i++) {
         players_[i]->clearDiscards();
     }
+
+	// Clear the table
+	table_.clear();
 
     int starter = startingPlayer();
 
@@ -139,4 +141,13 @@ vector<int> Game::winner() const {
 	}
 
     return winners;
+}
+
+vector<int> Game::scores() const {
+	vector<int> scores;
+	for (size_t i = 0; i < players_.size(); i++) {
+		scores.push_back(players_[i].getTotalScore());
+	}
+
+	return scores;
 }

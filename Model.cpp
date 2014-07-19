@@ -20,6 +20,13 @@ void Model::startGame() {
 	}
 	srand48(seed);
 	newGame = new Game(isComputer_);
+	
+	while(!newGame->hasWon()) {
+		newGame->newRound();
+	}
+	
+	winners_ = newGame->winner();
+	notify();	
 }
 
 void Model::endGame() {
@@ -42,6 +49,14 @@ void Model::togglePlayerType(const int player) {
 	}
 }
 
-bool isPlayerComputer(const int player) {
+bool Model::isPlayerComputer(const int player) {
 	return isComputer_[player-1];
 } 
+
+std::vector<int> Model::getScores() {
+	return newGame->scores();
+}
+
+std::vector<int> Model::getWinners() {
+	return newGame->winner();
+}

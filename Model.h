@@ -15,6 +15,8 @@ public:
 	void setSeed(const long seed);
 	void togglePlayerType(const int player);
 	bool isPlayerComputer(const int player);
+	std::vector<int> getScores();
+	std::vector<int> getWinners();
 	
 private:
 	bool isComputer_[numOfPlayers];

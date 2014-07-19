@@ -27,6 +27,15 @@ public:
 	// Let a Player rageQuit
 	void rageQuit(const int player);
 	
+	// Determine if game is over
+    bool hasWon() const;
+
+	// Helper function to determine the winner
+    std::vector<int> winner() const;
+
+	// Get the scores
+	std::vector<int> scores() const;
+
 private:
     // Deck ordering
     Deck deck_;
@@ -37,12 +46,6 @@ private:
     // Vector of players
     std::vector<Player*> players_;
     
-    // Helper function to determine if game is over
-    bool hasWon() const;
-
-    // Helper function to determine the winner
-    std::vector<int> winner() const;
-
     // Helper function to choose the starting player (8S)
     int startingPlayer() const;
 };
