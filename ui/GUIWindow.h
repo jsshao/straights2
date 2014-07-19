@@ -13,7 +13,7 @@ public:
     GUIWindow();
     virtual ~GUIWindow();
 protected:
-    Gtk::Image* *cards[4];
+    Gtk::Image* cards[52];
     DeckGUI card_manager;
     Gtk::VBox layout;
     Gtk::Table table;
