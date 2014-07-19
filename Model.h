@@ -2,6 +2,7 @@
 #define MODEL_H
 
 #include "Subject.h"
+#include "Game.h"
 
 const int numOfPlayers = 4;
 
@@ -9,6 +10,7 @@ class Model : public Subject {
 public:
 	Model();
 	~Model();
+	void startGame();
 	void endGame();
 	void setSeed(const long seed);
 	void togglePlayerType(const int player);

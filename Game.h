@@ -10,7 +10,7 @@ class Player;
 class Game {
 public:
     // Constructor
-    Game();
+    Game(bool *);
 
     // Destructor
     ~Game();

@@ -9,17 +9,13 @@
 using namespace std;
 
 // Constructor- shuffles deck, intialize players as human/computer, and deal out cards
-Game::Game() {
+Game::Game(bool isComputer[4]) {
     deck_.shuffle();
     
     for (size_t i = 0; i < 4; i++) {
-        char input;
-        cout << "Is player " << i+1 << " a human(h) or a computer(c)?" << endl << ">";
-        cin >> input;
-
-        if (input == 'h') {
+        if (isComputer[i] == false) {
             players_.push_back(new Player(new HumanStrategy));
-        } else if (input == 'c') {
+        } else if (isComputer[i] == true) {
             players_.push_back(new Player(new ComputerStrategy)); 
         }
 

@@ -1,3 +1,7 @@
+#include <cstdlib>
+#include "Model.h"
+#include "Game.h"
+
 Model::Model() : seed(0), newGame(NULL) {
 	for (int i = 0; i < numOfPlayers; i++) {
 		isComputer_ = false;	
@@ -8,6 +12,14 @@ Model::~Model() {
 	if (newGame != NULL) {
 		delete newGame;
 	}
+}
+
+void Model::startGame() {
+	if (newGame != NULL) {
+		delete newGame;
+	}
+	srand48(seed);
+	newGame = new Game(isComputer_);
 }
 
 void Model::endGame() {
