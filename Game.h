@@ -24,6 +24,9 @@ public:
     // Print out the contents of the deck
     void printDeck() const;
 
+	// Let a Player rageQuit
+	void rageQuit(const int player);
+	
 private:
     // Deck ordering
     Deck deck_;

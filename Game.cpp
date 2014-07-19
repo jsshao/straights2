@@ -99,6 +99,11 @@ void Game::printDeck() const {
     cout << deck_ << endl;
 }
 
+// RageQuit
+void rageQuit(const int player) {
+	players_[player-1].rageQuit();
+}
+
 // Find the starting player with seven of spades
 int Game::startingPlayer() const {
     for (size_t i = 0; i < players_.size(); i++) {
