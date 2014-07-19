@@ -18,7 +18,8 @@ protected:
     Gtk::Image* cards[52];
     DeckGUI card_manager;
     Gtk::VBox layout;
-    Gtk::Table table;
+    Gtk::HBox header;
+	Gtk::Table table;
 	Gtk::Button start_;
 	Gtk::Button end_;
 	Gtk::Entry seed_;

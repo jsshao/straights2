@@ -15,10 +15,11 @@ GUIWindow::GUIWindow() :
         }
     }
 	seed_.set_text("0");
-    layout.add(table);
-    layout.add(start_);
-	layout.add(seed_);
-	layout.add(end_);
+    header.add(start_);
+	header.add(seed_);
+	header.add(end_);
+    layout.add(header);
+	layout.add(table);
 	add(layout);
 
     show_all();
