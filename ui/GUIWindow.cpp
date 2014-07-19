@@ -12,8 +12,10 @@ GUIWindow::GUIWindow() :
             table.attach(*cards[i*13+j], j, j+1, i, i+1);
         }
     }
+	seed_.set_text("0");
     layout.add(table);
     layout.add(start_);
+	layout.add(seed_);
 	layout.add(end_);
 	add(layout);
 

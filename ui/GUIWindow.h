@@ -6,6 +6,7 @@
 #include <gtkmm/image.h>
 #include <gtkmm/table.h>
 #include <gtkmm/button.h>
+#include <gtkmm/entry.h>
 #include <vector>
 #include "DeckGUI.h"
 
@@ -20,6 +21,7 @@ protected:
     Gtk::Table table;
 	Gtk::Button start_;
 	Gtk::Button end_;
+	Gtk::Entry seed_;
 };
 
 #endif
