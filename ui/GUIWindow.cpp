@@ -3,7 +3,7 @@
 using namespace std;
 
 GUIWindow::GUIWindow() :
-    table(10,10,true)
+    table(10,10,true), start_("Start Game"), end_("End Game")
 {
     set_border_width( 10 );
     for (int i = 0; i < 4; i++) {
@@ -13,7 +13,9 @@ GUIWindow::GUIWindow() :
         }
     }
     layout.add(table);
-    add(layout);
+    layout.add(start_);
+	layout.add(end_);
+	add(layout);
 
     show_all();
 }

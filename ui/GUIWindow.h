@@ -5,6 +5,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>
 #include <gtkmm/table.h>
+#include <gtkmm/button.h>
 #include <vector>
 #include "DeckGUI.h"
 
@@ -17,6 +18,8 @@ protected:
     DeckGUI card_manager;
     Gtk::VBox layout;
     Gtk::Table table;
+	Gtk::Button start_;
+	Gtk::Button end_;
 };
 
 #endif
