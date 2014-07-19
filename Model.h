@@ -17,8 +17,10 @@ public:
 	bool isPlayerComputer(const int player);
 	std::vector<int> getScores();
 	std::vector<int> getWinners();
+	int startingPlayer();
 	
 private:
+	int turn;
 	bool isComputer_[numOfPlayers];
 	long seed_;
 	Game *newGame;

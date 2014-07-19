@@ -2,7 +2,7 @@
 #include "Model.h"
 #include "Game.h"
 
-Model::Model() : seed(0), newGame(NULL) {
+Model::Model() : turn(0), seed(0), newGame(NULL) {
 	for (int i = 0; i < numOfPlayers; i++) {
 		isComputer_ = false;	
 	} 
@@ -20,8 +20,10 @@ void Model::startGame() {
 	}
 	srand48(seed);
 	newGame = new Game(isComputer_);
+	turn = 1;
 	
 	while(!newGame->hasWon()) {
+		// NEEDS WORK
 		newGame->newRound();
 	}
 	
@@ -59,4 +61,8 @@ std::vector<int> Model::getScores() {
 
 std::vector<int> Model::getWinners() {
 	return newGame->winner();
+}
+
+int Model::startingPlayer() {
+	return newGame->startingPlayer();
 }

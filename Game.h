@@ -36,6 +36,9 @@ public:
 	// Get the scores
 	std::vector<int> scores() const;
 
+	// Choose the starting player (8S)
+    int startingPlayer() const;
+
 private:
     // Deck ordering
     Deck deck_;
@@ -45,9 +48,6 @@ private:
 
     // Vector of players
     std::vector<Player*> players_;
-    
-    // Helper function to choose the starting player (8S)
-    int startingPlayer() const;
 };
 
 #endif
