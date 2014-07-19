@@ -3,8 +3,10 @@
 using namespace std;
 
 GUIWindow::GUIWindow() :
-    table(10,10,true), start_("Start Game"), end_("End Game")
+    table(4,13,true), start_("Start Game"), end_("End Game")
 {
+    table.set_row_spacings(10);
+    table.set_col_spacings(10);
     set_border_width( 10 );
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 13; j++) {
