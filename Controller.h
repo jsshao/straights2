@@ -16,6 +16,6 @@ public:
 
 private:
 	Model *model_;
-}
+};
 
 #endif

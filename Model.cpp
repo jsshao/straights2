@@ -2,9 +2,9 @@
 #include "Model.h"
 #include "Game.h"
 
-Model::Model() : turn(0), seed(0), newGame(NULL) {
+Model::Model() : turn(0), seed_(0), newGame(NULL) {
 	for (int i = 0; i < numOfPlayers; i++) {
-		isComputer_ = false;	
+		isComputer_[i] = false;	
 	} 
 }
 
@@ -18,7 +18,7 @@ void Model::startGame() {
 	if (newGame != NULL) {
 		delete newGame;
 	}
-	srand48(seed);
+	srand48(seed_);
 	newGame = new Game(isComputer_);
 	turn = 1;
 	

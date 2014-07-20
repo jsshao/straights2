@@ -1,13 +1,8 @@
 #include "Controller.h"
-#include "Model.h"
 
 Controller::Controller(Model *model) : model_(model) {}
 
-Controller::~Controller() {
-	if (model_ != NULL) {
-		delete model_;
-	}
-}
+Controller::~Controller() {}
 
 void Controller::setSeed(const long seed) {
 	model_->setSeed(seed);

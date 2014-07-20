@@ -98,8 +98,8 @@ void Game::printDeck() const {
 }
 
 // RageQuit
-void rageQuit(const int player) {
-	players_[player-1].rageQuit();
+void Game::rageQuit(const int player) {
+	players_[player-1]->ragequit();
 }
 
 // Find the starting player with seven of spades
@@ -146,7 +146,7 @@ vector<int> Game::winner() const {
 vector<int> Game::scores() const {
 	vector<int> scores;
 	for (size_t i = 0; i < players_.size(); i++) {
-		scores.push_back(players_[i].getTotalScore());
+		scores.push_back(players_[i]->getTotalScore());
 	}
 
 	return scores;

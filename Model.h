@@ -23,7 +23,8 @@ private:
 	int turn;
 	bool isComputer_[numOfPlayers];
 	long seed_;
+    std::vector<int> winners_;
 	Game *newGame;
-}
+};
 
 #endif

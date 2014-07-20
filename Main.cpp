@@ -2,6 +2,9 @@
 #include <cstdlib>
 #include "Game.h"
 #include "gtkmm/main.h"
+#include "Model.h"
+#include "View.h"
+#include "Controller.h"
 
 // Main class to start up the game of Straights 
 int main(int argc, char* argv[]) {
