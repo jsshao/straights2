@@ -35,7 +35,7 @@ void Player::printDiscards() const {
 }
 
 // Return discarded cards by the player
-vector<Card> getDiscards() {
+vector<Card> Player::getDiscards() {
 	return discards_; 
 }
 
@@ -105,11 +105,11 @@ vector<Card> Player::getHand() const {
     return hand_;
 }
 
-void playCard(Card card) {
+void Player::playCard(Card card) {
 	hand_.erase(remove(hand_.begin(), hand_.end(), card));
 }
 
-void discardCard(Card card) {
+void Player::discardCard(Card card) {
 	playCard(card);
 	discards_.push_back(card);
 	round_score_ += card.getRank()+1;	

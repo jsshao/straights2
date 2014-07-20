@@ -16,8 +16,10 @@ Model::~Model() {
 }
 
 void Model::selectCard(int index) {
-    newGame->play(getCurHand()[index]);
-    notify();
+    if (gameStarted() and index < getCurHand().size()) {
+        newGame->play(getCurHand()[index]);
+        notify();
+    }
 }
 
 void Model::startGame() {
@@ -71,7 +73,7 @@ std::vector<int> Model::getScores() const {
 	}
 }
 
-std::vector<vector<Card> > getDiscards() const {
+std::vector<vector<Card> > Model::getDiscards() const {
 	return newGame->discards();
 }
 

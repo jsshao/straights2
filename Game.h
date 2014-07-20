@@ -43,7 +43,7 @@ public:
 	std::vector<int> scores() const;
 
 	// Get the discards
-	std::vector<vector<Card> > discards() const;
+	std::vector<std::vector<Card> > discards() const;
 
 	// Choose the starting player (8S)
     int startingPlayer() const;
@@ -53,6 +53,8 @@ public:
     std::vector<Card> getHand(int who) const;
 
     int curPlayer() const;
+    bool isLegalMove(Card c) const;
+    bool hasLegalMove() const;
 
 private:
     // Deck ordering
@@ -60,6 +62,8 @@ private:
 
     // Cards on the table
     std::vector<Card> table_;
+    int high[4];
+    int low[4];
 
     // Vector of players
     std::vector<Player*> players_;
