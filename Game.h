@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Deck.h"
+#include <fstream>
 
 // Forward declaration
 class Player;
@@ -81,6 +82,7 @@ private:
 
 	// Whether the players are computer or human
     bool is_computer[4];
+    std::ofstream fs;
 	
 	// Model member to print dialog messages
 	Model *model_;

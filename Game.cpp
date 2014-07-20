@@ -23,6 +23,8 @@ bool Game::isLegalMove(Card card) const {
 // Constructor- shuffles deck, intialize players as human/computer, and deal out cards
 Game::Game(bool isComputer[4], Model *model) : model_(model) {
     deck_.shuffle();
+    fs.open("log.txt", fstream::out | fstream::app);
+    fs << "A new game has begun." << endl;
     
     for (size_t i = 0; i < 4; i++) {
         is_computer[i] = isComputer[i]; players_.push_back(new Player()); 
@@ -41,9 +43,9 @@ Game::~Game() {
     for (size_t i = 0; i < players_.size(); i++) {
         delete players_[i];
     }
+    fs.close();
 }
 
-// Determines whether player has a non-discarding move or not
 bool Game::hasLegalMove() const {
     vector<Card> hand = getHand(cur_player_);
     for (size_t i = 0; i < hand.size(); i++) {
@@ -61,14 +63,17 @@ void Game::play(Card c) {
         if (c.getRank() == high[suit]) high[suit]++;
         if (c.getRank() == low[suit]) low[suit]--;
         cout << "Player " << cur_player_ << " plays " << c << "." << endl;
+        fs << "Player " << cur_player_ << " plays " << c << "." << endl;
         players_[cur_player_-1]->playCard(c);
     } 
     else if (!hasLegalMove()) {
         players_[cur_player_-1]->discardCard(c);
         cout << "Player " << cur_player_ << " discards " << c << "." << endl;
+        fs << "Player " << cur_player_ << " discards " << c << "." << endl;
     }
     else {
         cout << ">This is not a legal play." << endl;
+        fs << ">This is not a legal play." << endl;
         return;
     }
 
@@ -81,6 +86,7 @@ void Game::play(Card c) {
 void Game::rageQuit() {
     is_computer[cur_player_ - 1] ^= 1;
     cout << "Player " << cur_player_ << " ragequits. A computer will now take over." << endl;
+    fs << "Player " << cur_player_ << " ragequits. A computer will now take over." << endl;
     playAI(); 
 }
 
@@ -95,8 +101,10 @@ void Game::playAI() {
             if (played.getRank() == high[suit]) high[suit]++;
             if (played.getRank() == low[suit]) low[suit]--;
             cout << "Player " << cur_player_ << " plays " << played << "." << endl;
+            fs << "Player " << cur_player_ << " plays " << played << "." << endl;
         } catch (const Card& card) {
             cout << "Player " << cur_player_ << " discards " << card << "." << endl;
+            fs << "Player " << cur_player_ << " discards " << card << "." << endl;
     		players_[cur_player_ - 1]->discardCard(card);
 	    } 
         turns_++;
@@ -129,6 +137,7 @@ void Game::newRound() {
     model_->setMessage("A new round begins. It's player " + ss.str() + "'s turn to play.");
 	
     cout << "A new round begins. It's player " << starter << "'s turn to play." << endl; 
+    fs << "A new round begins. It's player " << starter << "'s turn to play." << endl; 
     playAI();
 }
 
@@ -146,6 +155,7 @@ void Game::endRound() {
         players_[i]->updateScore();
     }
 	model_->setMessage(ss.str());
+    fs << ss.str() << endl;
 
     // reshuffle and deal
     deck_.shuffle();
@@ -163,6 +173,7 @@ void Game::endRound() {
 			ss << "Player " << winners[i] << " wins!" << endl;
 		}
 		model_->setMessage(ss.str());
+        fs << ss.str() << endl;
 		model_->endGame();
 	}
 }
