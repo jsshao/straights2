@@ -108,7 +108,17 @@ void View::update() {
         for (size_t i = 0; i < moves.size(); i++) {
             handButtons_[moves[i]].set_sensitive(true);
         }
-    }
+    } else {
+		for (int i = 0; i < 4; i++) {
+			points[i].set_text("0 points");
+        	discards[i].set_text("0 discards");
+		}
+	
+		for (size_t i = 0; i < 13; i++) {
+       		hand_cards[i]->set(null);
+        	handButtons_[i].set_sensitive(false);
+    	}
+	}
 
 	if (model_->gameStarted()) {
 		vector<int> scores = model_->getScores();
