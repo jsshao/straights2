@@ -87,10 +87,12 @@ void View::update() {
             cards[i*13+j]->set(null);
         }
     }    
-    for (size_t i = 0; i < 13; i++) {
-        hand_cards[i]->set(null);
-        handButtons_[i].set_sensitive(false);
-    }
+    if (model_->gameStarted()) {
+		for (size_t i = 0; i < 13; i++) {
+       		hand_cards[i]->set(null);
+        	handButtons_[i].set_sensitive(false);
+    	}
+	}
     if (model_->gameStarted()) {
         vector<Card> table = model_->getTable();
         for (size_t i = 0; i < table.size(); i++) {

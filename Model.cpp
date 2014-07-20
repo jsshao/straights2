@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "Game.h"
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 Model::Model() : turn_(0), seed_(0), message_(""), newGame(NULL) {
@@ -30,7 +31,10 @@ void Model::startGame() {
 	srand48(seed_);
 	newGame = new Game(isComputer_);
 	turn_ = 1;
-	
+
+	stringstream oss;
+	oss << startingPlayer();
+	setMessage("A new round begins. It's player " + oss.str() + "'s turn to play.");
 	notify();	
 }
 
@@ -81,9 +85,7 @@ std::vector<int> Model::getScores() const {
 	} else {
 		vector<int> empty;
 		return empty;
-	}
-}
-
+	} } 
 std::vector<vector<Card> > Model::getDiscards() const {
 	return newGame->discards();
 }
