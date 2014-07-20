@@ -43,6 +43,17 @@ void Model::endGame() {
 	notify();
 }
 
+vector<int> Model::getMoves() const {
+    vector<int> moves;
+    vector<Card> hand = getCurHand();
+    for (int i = 0; i < hand.size(); i++) {
+        if (newGame->isLegalMove(hand[i])) {
+            moves.push_back(i);
+        }
+    }
+    return moves;
+}
+
 bool Model::gameStarted() const {
     return turn_ > 0;
 }

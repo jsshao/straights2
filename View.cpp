@@ -96,9 +96,19 @@ void View::update() {
             cards[(int)table[i].getSuit()*13 + (int)table[i].getRank()]->set(card_manager.getCard(table[i].getRank(), table[i].getSuit()));
         }
         vector<Card> hand = model_->getCurHand();
+        vector<int> moves = model_->getMoves();
         for (size_t i = 0; i < hand.size(); i++) {
             hand_cards[i]->set(card_manager.getCard(hand[i].getRank(), hand[i].getSuit())); 
+            if (moves.size())
+                handButtons_[i].set_sensitive(false);
+            else 
+                handButtons_[i].set_sensitive(true);
+
         }
+        for (size_t i = 0; i < moves.size(); i++) {
+            handButtons_[moves[i]].set_sensitive(true);
+        }
+        cout << endl;
     }
 
 	if (model_->gameStarted()) {

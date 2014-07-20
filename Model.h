@@ -26,6 +26,7 @@ public:
     void selectCard(int); 
 	void setMessage(std::string msg);
     std::string getMessage() const;
+    std::vector<int> getMoves() const;
 	
 private:
 	int turn_;
