@@ -16,9 +16,6 @@ class Player {
 
         // Plays a card
         Card play(const std::vector<Card>& legal_moves, const Game& game);
-        
-        // Ragequits and turns into a computer player
-        void ragequit();
 
         // Print discarded cards by the player
         void printDiscards() const;

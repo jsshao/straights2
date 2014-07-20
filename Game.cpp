@@ -16,7 +16,6 @@ bool Game::isLegalMove(Card card) const {
     if (players_[cur_player_ - 1 ]->hasCard(Card(SPADE, SEVEN)))
         return false;
 
-    cout << high[(int)card.getSuit()] <<" "<< low[(int)card.getSuit()] << endl;
     return high[(int)card.getSuit()] == card.getRank() 
         or low[(int)card.getSuit()] == card.getRank();
 }
@@ -27,11 +26,7 @@ Game::Game(bool isComputer[4]) {
     
     for (size_t i = 0; i < 4; i++) {
         is_computer[i] = isComputer[i];
-        if (isComputer[i] == false) {
-            players_.push_back(new Player(new HumanStrategy));
-        } else if (isComputer[i] == true) {
-            players_.push_back(new Player(new ComputerStrategy)); 
-        }
+        players_.push_back(new Player(new ComputerStrategy)); 
 
         for (size_t j = 0; j < 13; j++) {
             players_[i]->addCard(deck_.deal());
@@ -81,19 +76,27 @@ void Game::play(Card c) {
         players_[cur_player_-1]->discardCard(c);
         cout << "Player " << cur_player_ << " discards " << c << "." << endl;
     }
-    else return;
+    else {
+        cout << ">This is not a legal play." << endl;
+        return;
+    }
 
 
     /*
-        cout << "Player " << cur_player_ << " discards " << card << "." << endl;
         cout << "Player " << cur_player_ << " ragequits. A computer will now take over." << endl;
         */
+    turns_++;
     cur_player_ = cur_player_ % 4 + 1;
     playAI();
 }
 
+void Game::rageQuit() {
+    is_computer[cur_player_ - 1] ^= 1;
+    playAI(); 
+}
+
 void Game::playAI() {
-    while (is_computer[cur_player_-1]) { 
+    while (is_computer[cur_player_-1] and turns_ < 52) { 
         try {
             Card played = players_[cur_player_ - 1]->play(table_, *this);
             table_.push_back(played);
@@ -104,7 +107,12 @@ void Game::playAI() {
         } catch (const Card& card) {
             cout << "Player " << cur_player_ << " discards " << card << "." << endl;
         } 
+        turns_++;
         cur_player_ = cur_player_ % 4 + 1;
+    }
+    if (turns_ == 52) { 
+        endRound();
+        newRound();
     }
 }
 
@@ -122,6 +130,7 @@ void Game::newRound() {
         low[i] = SEVEN;
     }
 
+    turns_ = 0;
     int starter = startingPlayer();
 
     cout << "A new round begins. It's player " << starter << "'s turn to play." << endl; 
@@ -153,11 +162,6 @@ void Game::endRound() {
 // Print out the entire deck
 void Game::printDeck() const {
     cout << deck_ << endl;
-}
-
-// RageQuit
-void Game::rageQuit(const int player) {
-	players_[player-1]->ragequit();
 }
 
 // Find the starting player with seven of spades

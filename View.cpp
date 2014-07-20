@@ -120,23 +120,18 @@ void View::update() {
 }
 
 void View::startClicked() {
-    cout << "start clicked" << endl;
-    cout << "seed is " << atoi(seed_.get_text().c_str()) << endl;
     controller_->setSeed(atoi(seed_.get_text().c_str()));
     controller_->startGame();
 }
 
 void View::endClicked() {
-    cout << "end clicked" << endl;
     controller_->endGame();
 }
 
 void View::cardClicked(int which) {
-    cout << "card " << which << " clicked" << endl;
     controller_->selectCard(which);
 }
 
 void View::switchClicked(int which) {
-    cout << "switch " << which << " clicked" << endl;
     controller_->togglePlayerType(which+1);
 }

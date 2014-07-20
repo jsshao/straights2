@@ -70,35 +70,14 @@ Card Player::play(const vector<Card>& table, const Game& game) {
     // Play a card and destroy it from hand
     try {
         Card card = strategy_->play(table, hand_, game);
-        for (size_t i = 0; i < hand_.size(); i++) {
-            if (hand_[i] == card) {
-                hand_.erase(hand_.begin() + i);
-            }
-        }
+        playCard(card);
         return card;
     } 
-    // Ragequits by throwing RageQuit exception
-    catch (const RageQuit& rq) {
-        ragequit();
-        throw rq;
-    }
     // Discards a card, add it to discards, update score and remove from hand
     catch (const Card &card) {
-        round_score_+= card.getRank()+1;
-        discards_.push_back(card);
-        for (size_t i = 0; i < hand_.size(); i++) {
-            if (hand_[i] == card) {
-                hand_.erase(hand_.begin() + i);
-            }
-        }
+        discardCard(card);
         throw card;
     }
-}
-
-// Ragequit by deleting human strategy and reimplementing strategy as a computer player
-void Player::ragequit() {
-    delete strategy_;
-    strategy_ = new ComputerStrategy;
 }
 
 vector<Card> Player::getHand() const {

@@ -54,8 +54,8 @@ void Model::setSeed(const long seed) {
 void Model::togglePlayerType(const int player) {
 	isComputer_[player-1] ^= true;
 	
-	if (isComputer_[player-1] == true && gameStarted()) {
-		newGame->rageQuit(player);
+	if (gameStarted()) {
+		newGame->rageQuit();
 	}
     notify();
 }

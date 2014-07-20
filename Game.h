@@ -30,9 +30,6 @@ public:
     void play(Card c);
     void playAI();
 
-	// Let a Player rageQuit
-	void rageQuit(const int player);
-	
 	// Determine if game is over
     bool hasWon() const;
 
@@ -55,6 +52,7 @@ public:
     int curPlayer() const;
     bool isLegalMove(Card c) const;
     bool hasLegalMove() const;
+    void rageQuit();
 
 private:
     // Deck ordering
@@ -64,7 +62,7 @@ private:
     std::vector<Card> table_;
     int high[4];
     int low[4];
-
+    int turns_;
     // Vector of players
     std::vector<Player*> players_;
 
