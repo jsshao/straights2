@@ -1,4 +1,5 @@
 #include "View.h"
+#include <gtkmm/messagedialog.h>
 #include <iostream>
 #include <cstdlib>
 using namespace std;
@@ -110,6 +111,11 @@ void View::update() {
 			oss2 << Discards[i].size();
 			discards[i].set_text(oss.str()+" points");
 		}	
+	}
+
+	if (model_->getMessage() != "") {
+		Gtk::MessageDialog dialogue(*this, model_->getMessage());
+    	dialogue.run();
 	}
 }
 

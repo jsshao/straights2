@@ -1,3 +1,6 @@
+#include <gtkmm/messagedialog.h>
+#include <gtkmm/dialog.h>
+#include <gtkmm/stock.h>
 #include "GUIWindow.h"
 #include <iostream>
 using namespace std;
@@ -49,8 +52,9 @@ GUIWindow::GUIWindow() :
     handFrame_.add(hand_);
     layout.add(handFrame_);
 
-	Gtk::Dialog temp("HI", *this, true, true);
-    add(layout);
+	Gtk::MessageDialog dialogue(*this, "BOOGA");
+	dialogue.run();
+	add(layout);
 
     show_all();
 }
