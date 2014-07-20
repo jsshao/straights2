@@ -29,7 +29,9 @@ void Model::startGame() {
 	srand48(seed_);
 	newGame = new Game(isComputer_, this);
 
-	turn_ = 1;
+	if (newGame != NULL) {
+		turn_ = 1;
+	}
 	notify();	
 }
 
