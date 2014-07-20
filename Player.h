@@ -40,6 +40,8 @@ class Player {
 
         // Update total score by adding the round score
         void updateScore();
+
+        std::vector<Card> getHand() const;
     
     private:
         // Define the strategy the player uses (human/computer)

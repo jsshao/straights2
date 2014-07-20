@@ -39,6 +39,10 @@ public:
 	// Choose the starting player (8S)
     int startingPlayer() const;
 
+    std::vector<Card> getTable() const;
+
+    std::vector<Card> getHand(int who) const;
+
 private:
     // Deck ordering
     Deck deck_;

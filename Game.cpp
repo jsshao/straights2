@@ -151,3 +151,11 @@ vector<int> Game::scores() const {
 
 	return scores;
 }
+
+vector<Card> Game::getTable() const {
+    return table_;
+};
+
+vector<Card> Game::getHand(int who) const {
+    return players_[who-1]->getHand();
+}

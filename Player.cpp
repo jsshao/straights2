@@ -95,3 +95,7 @@ void Player::ragequit() {
     delete strategy_;
     strategy_ = new ComputerStrategy;
 }
+
+vector<Card> Player::getHand() const {
+    return hand_;
+}

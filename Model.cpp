@@ -1,8 +1,10 @@
 #include <cstdlib>
 #include "Model.h"
 #include "Game.h"
+#include <iostream>
+using namespace std;
 
-Model::Model() : turn(0), seed_(0), newGame(NULL) {
+Model::Model() : turn_(0), seed_(0), current_player_(0), newGame(NULL) {
 	for (int i = 0; i < numOfPlayers; i++) {
 		isComputer_[i] = false;	
 	} 
@@ -17,25 +19,27 @@ Model::~Model() {
 void Model::startGame() {
 	if (newGame != NULL) {
 		delete newGame;
+        newGame = NULL;
 	}
 	srand48(seed_);
 	newGame = new Game(isComputer_);
-	turn = 1;
+	turn_ = 1;
+    current_player_ = startingPlayer();
 	
-	while(!newGame->hasWon()) {
-		// NEEDS WORK
-		newGame->newRound();
-	}
-	
-	winners_ = newGame->winner();
 	notify();	
 }
 
 void Model::endGame() {
 	if (newGame != NULL) {
 		delete newGame;
+        newGame = NULL;
 	}
+    turn_ = 0;
 	notify();
+}
+
+bool Model::gameStarted() const {
+    return turn_ > 0;
 }
 
 void Model::setSeed(const long seed) {
@@ -45,24 +49,36 @@ void Model::setSeed(const long seed) {
 void Model::togglePlayerType(const int player) {
 	isComputer_[player-1] ^= true;
 	
-	if (isComputer_[player-1] == true && newGame != NULL) {
+	if (isComputer_[player-1] == true && gameStarted()) {
 		newGame->rageQuit(player);
-		notify();
 	}
+    notify();
 }
 
-bool Model::isPlayerComputer(const int player) {
+bool Model::isPlayerComputer(const int player) const {
 	return isComputer_[player-1];
 } 
 
-std::vector<int> Model::getScores() {
+std::vector<int> Model::getScores() const {
 	return newGame->scores();
 }
 
-std::vector<int> Model::getWinners() {
+std::vector<int> Model::getWinners() const {
 	return newGame->winner();
 }
 
-int Model::startingPlayer() {
+int Model::startingPlayer() const {
 	return newGame->startingPlayer();
+}
+
+int Model::currentPlayer() const {
+    return current_player_;    
+}
+
+vector<Card> Model::getTable() const {
+    return newGame->getTable();
+}
+
+vector<Card> Model::getCurHand() const {
+    return newGame->getHand(currentPlayer());
 }

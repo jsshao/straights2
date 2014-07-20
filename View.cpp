@@ -71,13 +71,33 @@ View::~View() {
 }
 
 void View::update() {
-     
+    const Glib::RefPtr<Gdk::Pixbuf> null = card_manager.getNull();
+    for (int i = 0; i < 4; i++) {
+        if (!model_->gameStarted()) {
+            switchButton[i].set_label(model_->isPlayerComputer(i+1)?"Computer":"Human");
+            switchButton[i].set_sensitive(true);
+        } else {
+            switchButton[i].set_label("Rage");
+            switchButton[i].set_sensitive(model_->currentPlayer() == i+1);
+        }
+    }
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 13; j++) {
+            cards[i*13+j]->set(null);
+        }
+    }    
+    if (model_->gameStarted()) {
+        vector<Card> table = model_->getTable();
+        for (int i = 0; i < table.size(); i++) {
+            cards[(int)table[i].getSuit()*13 + (int)table[i].getRank()]->set(card_manager.getCard(table[i].getRank(), table[i].getSuit()));
+        }
+    }
 }
 
 void View::startClicked() {
     cout << "start clicked" << endl;
-    cout << "seed is " << atoi(seed_.get_text()) << endl;
-    controller_->setSeed(atoi(seed_.get_text()));
+    cout << "seed is " << atoi(seed_.get_text().c_str()) << endl;
+    controller_->setSeed(atoi(seed_.get_text().c_str()));
     controller_->startGame();
 }
 
@@ -93,4 +113,5 @@ void View::cardClicked(int which) {
 
 void View::switchClicked(int which) {
     cout << "switch " << which << " clicked" << endl;
+    controller_->togglePlayerType(which+1);
 }

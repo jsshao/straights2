@@ -14,13 +14,19 @@ public:
 	void endGame();
 	void setSeed(const long seed);
 	void togglePlayerType(const int player);
-	bool isPlayerComputer(const int player);
-	std::vector<int> getScores();
-	std::vector<int> getWinners();
-	int startingPlayer();
+	bool isPlayerComputer(const int player) const;
+	std::vector<int> getScores() const;
+	std::vector<int> getWinners() const;
+	int startingPlayer() const;
+    bool gameStarted() const;
+    int currentPlayer() const;
+    std::vector<Card> getTable() const;
+    std::vector<Card> getCurHand() const;
+    
 	
 private:
-	int turn;
+	int turn_;
+    int current_player_;
 	bool isComputer_[numOfPlayers];
 	long seed_;
     std::vector<int> winners_;
