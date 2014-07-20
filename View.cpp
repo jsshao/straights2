@@ -89,6 +89,7 @@ void View::update() {
     }    
     for (size_t i = 0; i < 13; i++) {
         hand_cards[i]->set(null);
+        handButtons_[i].set_sensitive(false);
     }
     if (model_->gameStarted()) {
         vector<Card> table = model_->getTable();
@@ -99,22 +100,18 @@ void View::update() {
         vector<int> moves = model_->getMoves();
         for (size_t i = 0; i < hand.size(); i++) {
             hand_cards[i]->set(card_manager.getCard(hand[i].getRank(), hand[i].getSuit())); 
-            if (moves.size())
-                handButtons_[i].set_sensitive(false);
-            else 
+            if (!moves.size())
                 handButtons_[i].set_sensitive(true);
-
         }
         for (size_t i = 0; i < moves.size(); i++) {
             handButtons_[moves[i]].set_sensitive(true);
         }
-        cout << endl;
     }
 
 	if (model_->gameStarted()) {
 		vector<int> scores = model_->getScores();
 		vector<vector<Card> > Discards = model_->getDiscards();
-		for (int i = 0; i < scores.size(); i++) {
+		for (size_t i = 0; i < scores.size(); i++) {
 			std::ostringstream oss, oss2;
 			oss << scores[i];
 			points[i].set_text(oss.str()+" points");

@@ -16,7 +16,7 @@ Model::~Model() {
 }
 
 void Model::selectCard(int index) {
-    if (gameStarted() and index < getCurHand().size()) {
+    if (gameStarted() and (size_t)index < getCurHand().size()) {
         newGame->play(getCurHand()[index]);
         notify();
     }
@@ -46,7 +46,7 @@ void Model::endGame() {
 vector<int> Model::getMoves() const {
     vector<int> moves;
     vector<Card> hand = getCurHand();
-    for (int i = 0; i < hand.size(); i++) {
+    for (size_t i = 0; i < hand.size(); i++) {
         if (newGame->isLegalMove(hand[i])) {
             moves.push_back(i);
         }

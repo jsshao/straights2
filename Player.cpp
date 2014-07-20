@@ -1,7 +1,4 @@
 #include "Player.h"
-#include "Card.h"
-#include "ComputerStrategy.h"
-#include "RageQuit.h"
 #include <vector>
 #include <algorithm>
 #include <iostream>
@@ -9,8 +6,7 @@
 using namespace std;
 
 // Constructor that initializes the type of player (human/computer)
-Player::Player(Strategy* strategy) :
-    strategy_(strategy),
+Player::Player() :
     round_score_(0),
     total_score_(0) 
 {
@@ -18,7 +14,6 @@ Player::Player(Strategy* strategy) :
 
 // Dynamically deallocates the strategy
 Player::~Player() {
-    delete strategy_;
 }
 
 // Clear all discards in player's hand
@@ -66,17 +61,14 @@ void Player::updateScore() {
 }
 
 // Let the player perform his turn
-Card Player::play(const vector<Card>& table, const Game& game) {
-    // Play a card and destroy it from hand
-    try {
-        Card card = strategy_->play(table, hand_, game);
-        playCard(card);
-        return card;
-    } 
-    // Discards a card, add it to discards, update score and remove from hand
-    catch (const Card &card) {
-        discardCard(card);
-        throw card;
+Card Player::play(const Game& game) {
+    if (!game.hasLegalMove()) 
+        throw hand_[0];
+    else {
+        for (size_t i = 0; i < hand_.size(); i++) {
+            if (game.isLegalMove(hand_[i]))
+                return hand_[i];
+        }
     }
 }
 

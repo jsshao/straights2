@@ -4,9 +4,6 @@
 #include "Game.h"
 #include "Card.h"
 #include "Player.h"
-#include "HumanStrategy.h"
-#include "ComputerStrategy.h"
-#include "RageQuit.h"
 using namespace std;
 
 bool Game::isLegalMove(Card card) const {
@@ -26,7 +23,7 @@ Game::Game(bool isComputer[4]) {
     
     for (size_t i = 0; i < 4; i++) {
         is_computer[i] = isComputer[i];
-        players_.push_back(new Player(new ComputerStrategy)); 
+        players_.push_back(new Player()); 
 
         for (size_t j = 0; j < 13; j++) {
             players_[i]->addCard(deck_.deal());
@@ -98,7 +95,7 @@ void Game::rageQuit() {
 void Game::playAI() {
     while (is_computer[cur_player_-1] and turns_ < 52) { 
         try {
-            Card played = players_[cur_player_ - 1]->play(table_, *this);
+            Card played = players_[cur_player_ - 1]->play(*this);
             table_.push_back(played);
             int suit = (int)played.getSuit();
             if (played.getRank() == high[suit]) high[suit]++;

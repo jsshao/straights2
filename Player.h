@@ -1,21 +1,21 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Strategy.h"
 #include <vector>
+#include "Card.h"
+#include "Game.h"
 
-class Game;
 
 class Player {
     public:
         // Constructor
-        Player(Strategy* strategy);
+        Player();
         
         // Destructor
         ~Player();
 
         // Plays a card
-        Card play(const std::vector<Card>& legal_moves, const Game& game);
+        Card play(const Game& game);
 
         // Print discarded cards by the player
         void printDiscards() const;
@@ -50,9 +50,6 @@ class Player {
         std::vector<Card> getHand() const;
     
     private:
-        // Define the strategy the player uses (human/computer)
-        Strategy* strategy_;
-        
         // Scores
         int round_score_;
         int total_score_;
