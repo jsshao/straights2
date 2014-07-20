@@ -21,8 +21,13 @@ public:
     // Start a new round of straights
     void newRound();
 
+    // Called at the end of a round
+    void endRound();
+
     // Print out the contents of the deck
     void printDeck() const;
+
+    void Game::play();
 
 	// Let a Player rageQuit
 	void rageQuit(const int player);
@@ -43,6 +48,8 @@ public:
 
     std::vector<Card> getHand(int who) const;
 
+    int curPlayer() const;
+
 private:
     // Deck ordering
     Deck deck_;
@@ -52,6 +59,8 @@ private:
 
     // Vector of players
     std::vector<Player*> players_;
+
+    int cur_player_;
 };
 
 #endif

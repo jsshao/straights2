@@ -22,11 +22,10 @@ public:
     int currentPlayer() const;
     std::vector<Card> getTable() const;
     std::vector<Card> getCurHand() const;
-    
+    void selectCard(int); 
 	
 private:
 	int turn_;
-    int current_player_;
 	bool isComputer_[numOfPlayers];
 	long seed_;
     std::vector<int> winners_;

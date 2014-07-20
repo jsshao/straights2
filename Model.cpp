@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-Model::Model() : turn_(0), seed_(0), current_player_(0), newGame(NULL) {
+Model::Model() : turn_(0), seed_(0), newGame(NULL) {
 	for (int i = 0; i < numOfPlayers; i++) {
 		isComputer_[i] = false;	
 	} 
@@ -16,6 +16,10 @@ Model::~Model() {
 	}
 }
 
+void Model::selectCard(int index) {
+    
+}
+
 void Model::startGame() {
 	if (newGame != NULL) {
 		delete newGame;
@@ -24,7 +28,6 @@ void Model::startGame() {
 	srand48(seed_);
 	newGame = new Game(isComputer_);
 	turn_ = 1;
-    current_player_ = startingPlayer();
 	
 	notify();	
 }
@@ -72,7 +75,7 @@ int Model::startingPlayer() const {
 }
 
 int Model::currentPlayer() const {
-    return current_player_;    
+    return newGame->curPlayer();    
 }
 
 vector<Card> Model::getTable() const {

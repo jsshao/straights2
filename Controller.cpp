@@ -17,7 +17,7 @@ void Controller::endGame() {
 }
 
 void Controller::selectCard(int index) {
-	
+	model_->selectCard(index);
 }
 
 void Controller::togglePlayerType(int player) {

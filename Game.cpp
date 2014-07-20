@@ -23,6 +23,7 @@ Game::Game(bool isComputer[4]) {
             players_[i]->addCard(deck_.deal());
         }
     }
+    cur_player_ = startingPlayer();
 }
 
 // Dynamically deallocate players
@@ -43,6 +44,20 @@ void Game::start() {
 	}
 }
 
+void Game::play() {
+    // Play a card or discard
+    try {
+        Card played = players_[cur_player_ - 1]->play(table_, *this);
+        table_.push_back(played);
+        cout << "Player " << cur_player_ << " plays " << played << "." << endl;
+    } catch (const Card& card) {
+        cout << "Player " << cur_player_ << " discards " << card << "." << endl;
+    } catch (const RageQuit& rq) {
+        cout << "Player " << cur_player_ << " ragequits. A computer will now take over." << endl;
+    }
+}
+
+
 // Play a new round of Straights
 void Game::newRound() {
     // Clear all discards
@@ -56,27 +71,14 @@ void Game::newRound() {
     int starter = startingPlayer();
 
     cout << "A new round begins. It's player " << starter << "'s turn to play." << endl; 
+}
 
-    // Play a card or discard
-    for (size_t i = 0; i < 52; i++) {
-        try {
-            Card played = players_[(starter + i - 1) % players_.size()]->play(table_, *this);
-            table_.push_back(played);
-            cout << "Player " << (starter + i - 1) % players_.size() + 1 << " plays " << played << "." << endl;
-        } catch (const Card& card) {
-            cout << "Player " << (starter + i - 1) % players_.size() + 1 << " discards " << card << "." << endl;
-        } catch (const RageQuit& rq) {
-            cout << "Player " << (starter + i - 1) % players_.size() + 1 << " ragequits. A computer will now take over." << endl;
-            i--;
-        }
-    } 
-
+void Game::endRound() {
     // At end of round, show each player's discards and score
     for (size_t i = 0; i < players_.size(); i++) {
         cout << "Player " << i+1 << "'s discards: ";
         players_[i]->printDiscards();
        
-
         int totScore = players_[i]->getTotalScore();
         int roundScore = players_[i]->getRoundScore();
         cout << "Player " << i+1 << "'s score: " << totScore  << " + " << roundScore << " = " << totScore + roundScore << endl;
@@ -91,6 +93,7 @@ void Game::newRound() {
         }
     }
 }
+
 
 // Print out the entire deck
 void Game::printDeck() const {
