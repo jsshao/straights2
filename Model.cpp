@@ -24,10 +24,8 @@ void Model::selectCard(int index) {
 }
 
 void Model::startGame() {
-	if (newGame != NULL) {
-		delete newGame;
-        newGame = NULL;
-	}
+	endGame();
+
 	srand48(seed_);
 	newGame = new Game(isComputer_, this);
 
