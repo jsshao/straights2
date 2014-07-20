@@ -17,11 +17,5 @@ int main(int argc, char* argv[]) {
     View view( &controller, &model );     // Create the view -- is passed handle to controller and model
     Gtk::Main::run( view );               // Show the window and return when it is closed.
 
-	
-/*
-    // Start the game
-    Game newGame;
-    newGame.start();
-*/
     return 0;
 }

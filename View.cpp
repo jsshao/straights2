@@ -4,9 +4,11 @@
 #include <cstdlib>
 using namespace std;
 
+// Constructor to intialize the layout
 View::View(Controller *c, Model *m) :
     controller_(c), model_(m), table(4,13,true), start_("Start Game"), end_("End Game")
 {
+	// Initialize empty table
     const Glib::RefPtr<Gdk::Pixbuf> null = card_manager.getNull();
     table.set_row_spacings(10);
     table.set_col_spacings(10);
@@ -18,6 +20,7 @@ View::View(Controller *c, Model *m) :
         }
     }
 
+	// Intialize players info to 0 points, 0 discards
     for (int i = 0; i < 4; i++) {
         std::ostringstream oss;
         oss << (i+1);
@@ -33,6 +36,8 @@ View::View(Controller *c, Model *m) :
         playerFrame[i].add(player[i]);
         players.add(playerFrame[i]);
     }
+
+	// Intialize seed
     seed_.set_text("0");
     header.add(start_);
     header.add(seed_);
@@ -44,6 +49,7 @@ View::View(Controller *c, Model *m) :
     layout.add(tableFrame);
     layout.add(players);
 
+	// Intialize cards in hand to be empty
     handFrame_.set_label("Your hand");
     for (int i = 0; i < 13; i++) {
         hand_cards[i] = new Gtk::Image(null);
@@ -57,10 +63,12 @@ View::View(Controller *c, Model *m) :
 	start_.signal_clicked().connect( sigc::mem_fun( *this, &View::startClicked ) );
 	end_.signal_clicked().connect( sigc::mem_fun( *this, &View::endClicked ) );
 
+	// Display all
     show_all();
     model_->subscribe(this);
 }
 
+// Destructor that deletes cards that were dynamically allocated
 View::~View() {
     for (int i = 0; i < 52; i++) {
         delete cards[i];
@@ -71,6 +79,7 @@ View::~View() {
 
 }
 
+// Reloads informationt and queries info from the Model like points, discards, hand, table
 void View::update() {
     const Glib::RefPtr<Gdk::Pixbuf> null = card_manager.getNull();
     for (int i = 0; i < 4; i++) {
@@ -136,19 +145,23 @@ void View::update() {
 	}
 }
 
+// Set the seed
 void View::startClicked() {
     controller_->setSeed(atoi(seed_.get_text().c_str()));
     controller_->startGame();
 }
 
+// End the game
 void View::endClicked() {
     controller_->endGame();
 }
 
+// Play the clicked card
 void View::cardClicked(int which) {
     controller_->selectCard(which);
 }
 
+// Switch that player between AI/Human
 void View::switchClicked(int which) {
     controller_->togglePlayerType(which+1);
 }
