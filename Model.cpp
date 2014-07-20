@@ -12,7 +12,8 @@ Model::Model() : turn_(0), seed_(0), message_(""), newGame(NULL) {
 }
 
 Model::~Model() {
-	if (newGame != NULL) { delete newGame;
+	if (newGame != NULL) { 
+        delete newGame;
 	}
 }
 
@@ -25,13 +26,11 @@ void Model::selectCard(int index) {
 
 void Model::startGame() {
 	endGame();
-
+    ended = false;
 	srand48(seed_);
 	newGame = new Game(isComputer_, this);
-
-	if (newGame != NULL) {
-		turn_ = 1;
-	}
+    turn_ = 1;
+    if (ended) endGame();
 	notify();	
 }
 
@@ -40,6 +39,7 @@ void Model::endGame() {
 		delete newGame;
         newGame = NULL;
 	}
+    ended = true;
     turn_ = 0;
 	notify();
 }

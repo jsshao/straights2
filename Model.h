@@ -33,6 +33,7 @@ public:
 	
 private:
 	int turn_;
+    bool ended;
 	bool isComputer_[numOfPlayers];
 	long seed_;
     std::string message_;

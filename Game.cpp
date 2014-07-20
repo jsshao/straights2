@@ -34,6 +34,7 @@ Game::Game(bool isComputer[4], Model *model) : model_(model) {
 	newRound();
 }
 
+
 // Dynamically deallocate players
 Game::~Game() {
     for (size_t i = 0; i < players_.size(); i++) {
@@ -79,10 +80,6 @@ void Game::play(Card c) {
         return;
     }
 
-
-    /*
-        cout << "Player " << cur_player_ << " ragequits. A computer will now take over." << endl;
-        */
     turns_++;
     cur_player_ = cur_player_ % 4 + 1;
     playAI();
@@ -90,6 +87,7 @@ void Game::play(Card c) {
 
 void Game::rageQuit() {
     is_computer[cur_player_ - 1] ^= 1;
+    cout << "Player " << cur_player_ << " ragequits. A computer will now take over." << endl;
     playAI(); 
 }
 
