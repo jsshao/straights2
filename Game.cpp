@@ -130,14 +130,14 @@ void Game::newRound() {
     }
 
     turns_ = 0;
-    cur_player_ = startingPlayer();
-
+    int starter = startingPlayer();
+    cur_player_ = starter;
 	stringstream ss;
 	ss << startingPlayer();
     model_->setMessage("A new round begins. It's player " + ss.str() + "'s turn to play.");
 	
-    cout << "A new round begins. It's player " << cur_player_ << "'s turn to play." << endl; 
-    fs << "A new round begins. It's player " << cur_player_  << "'s turn to play." << endl; 
+    cout << "A new round begins. It's player " << starter << "'s turn to play." << endl; 
+    fs << "A new round begins. It's player " << starter << "'s turn to play." << endl; 
     playAI();
 }
 
