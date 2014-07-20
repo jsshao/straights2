@@ -86,10 +86,17 @@ void View::update() {
             cards[i*13+j]->set(null);
         }
     }    
+    for (size_t i = 0; i < 13; i++) {
+        hand_cards[i]->set(null);
+    }
     if (model_->gameStarted()) {
         vector<Card> table = model_->getTable();
-        for (int i = 0; i < table.size(); i++) {
+        for (size_t i = 0; i < table.size(); i++) {
             cards[(int)table[i].getSuit()*13 + (int)table[i].getRank()]->set(card_manager.getCard(table[i].getRank(), table[i].getSuit()));
+        }
+        vector<Card> hand = model_->getCurHand();
+        for (size_t i = 0; i < hand.size(); i++) {
+            hand_cards[i]->set(card_manager.getCard(hand[i].getRank(), hand[i].getSuit())); 
         }
     }
 }
