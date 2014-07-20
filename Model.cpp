@@ -36,6 +36,7 @@ void Model::startGame() {
 }
 
 void Model::endGame() {
+	cout << "GOOD BYE";
 	if (newGame != NULL) {
 		delete newGame;
         newGame = NULL;

@@ -171,6 +171,7 @@ void Game::endRound() {
 			ss << "Player " << winners[i] << " wins!" << endl;
 		}
 		model_->setMessage(ss.str());
+		cout << " GOOD BYE";
 		model_->endGame();
 	}
 }
