@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <vector>
+#include <sstream>
 #include "Card.h"
 #include "Game.h"
 
@@ -18,7 +19,7 @@ class Player {
         Card play(const Game& game);
 
         // Print discarded cards by the player
-        void printDiscards() const;
+        void printDiscards(std::stringstream &) const;
 
 		// Return discarded cards by the player
 		std::vector<Card> getDiscards();

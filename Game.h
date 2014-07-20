@@ -6,11 +6,12 @@
 
 // Forward declaration
 class Player;
+class Model;
 
 class Game {
 public:
     // Constructor
-    Game(bool *);
+    Game(bool *, Model *);
 
     // Destructor
     ~Game();
@@ -68,6 +69,8 @@ private:
 
     int cur_player_;
     bool is_computer[4];
+	
+	Model *model_;
 };
 
 #endif

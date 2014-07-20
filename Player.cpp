@@ -22,11 +22,11 @@ void Player::clearDiscards() {
 }
 
 // Output the discarded cards at the end of each round
-void Player::printDiscards() const {
+void Player::printDiscards(stringstream &ss) const {
     for (size_t j = 0; j < discards_.size(); j++) {
-        cout << discards_[j] << (j == discards_.size() - 1 ? "" :" ");
+        ss << discards_[j] << (j == discards_.size() - 1 ? "" :" ");
     }
-    cout << endl;
+    ss << endl;
 }
 
 // Return discarded cards by the player

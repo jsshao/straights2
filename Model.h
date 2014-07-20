@@ -1,8 +1,11 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include <vector>
 #include "Subject.h"
-#include "Game.h"
+#include "Card.h"
+
+class Game;
 
 const int numOfPlayers = 4;
 

@@ -29,12 +29,9 @@ void Model::startGame() {
         newGame = NULL;
 	}
 	srand48(seed_);
-	newGame = new Game(isComputer_);
+	newGame = new Game(isComputer_, this);
 	turn_ = 1;
 
-	stringstream oss;
-	oss << startingPlayer();
-	setMessage("A new round begins. It's player " + oss.str() + "'s turn to play.");
 	notify();	
 }
 

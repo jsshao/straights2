@@ -1,6 +1,8 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include "Model.h"
 #include "Game.h"
 #include "Card.h"
 #include "Player.h"
@@ -18,19 +20,18 @@ bool Game::isLegalMove(Card card) const {
 }
 
 // Constructor- shuffles deck, intialize players as human/computer, and deal out cards
-Game::Game(bool isComputer[4]) {
+Game::Game(bool isComputer[4], Model *model) : model_(model) {
     deck_.shuffle();
     
     for (size_t i = 0; i < 4; i++) {
-        is_computer[i] = isComputer[i];
-        players_.push_back(new Player()); 
+        is_computer[i] = isComputer[i]; players_.push_back(new Player()); 
 
         for (size_t j = 0; j < 13; j++) {
             players_[i]->addCard(deck_.deal());
         }
     }
     cur_player_ = startingPlayer();
-    newRound();
+	newRound();
 }
 
 // Dynamically deallocate players
@@ -97,7 +98,8 @@ void Game::playAI() {
         try {
             Card played = players_[cur_player_ - 1]->play(*this);
             table_.push_back(played);
-            int suit = (int)played.getSuit();
+            players_[cur_player_ - 1]->playCard(played);
+			int suit = (int)played.getSuit();
             if (played.getRank() == high[suit]) high[suit]++;
             if (played.getRank() == low[suit]) low[suit]--;
             cout << "Player " << cur_player_ << " plays " << played << "." << endl;
@@ -109,7 +111,6 @@ void Game::playAI() {
     }
     if (turns_ == 52) { 
         endRound();
-        newRound();
     }
 }
 
@@ -130,21 +131,28 @@ void Game::newRound() {
     turns_ = 0;
     int starter = startingPlayer();
 
+	stringstream ss;
+	ss << startingPlayer();
+    model_->setMessage("A new round begins. It's player " + ss.str() + "'s turn to play.");
+	
     cout << "A new round begins. It's player " << starter << "'s turn to play." << endl; 
     playAI();
 }
 
 void Game::endRound() {
     // At end of round, show each player's discards and score
-    for (size_t i = 0; i < players_.size(); i++) {
-        cout << "Player " << i+1 << "'s discards: ";
-        players_[i]->printDiscards();
+    stringstream ss;
+	
+	for (size_t i = 0; i < players_.size(); i++) {
+        ss << "Player " << i+1 << "'s discards: ";
+        players_[i]->printDiscards(ss);
        
         int totScore = players_[i]->getTotalScore();
         int roundScore = players_[i]->getRoundScore();
-        cout << "Player " << i+1 << "'s score: " << totScore  << " + " << roundScore << " = " << totScore + roundScore << endl;
+        ss << "Player " << i+1 << "'s score: " << totScore  << " + " << roundScore << " = " << totScore + roundScore << endl;
         players_[i]->updateScore();
     }
+	model_->setMessage(ss.str());
 
     // reshuffle and deal
     deck_.shuffle();
@@ -153,6 +161,11 @@ void Game::endRound() {
             players_[i]->addCard(deck_.deal());
         }
     }
+	if (!hasWon()) {
+		newRound();
+	} else {
+		cout << " DONE" << endl;	
+	}
 }
 
 
