@@ -22,6 +22,9 @@ class Player {
 
         // Print discarded cards by the player
         void printDiscards() const;
+
+		// Return discarded cards by the player
+		std::vector<Card> getDiscards();
     
         // Clear the discards from the player after each round
         void clearDiscards();
@@ -37,6 +40,12 @@ class Player {
 
         // Determine whether a player has a certain card in the hand
         bool hasCard(Card card) const;
+
+		// Play the card (remove from hand)
+		void playCard(Card card);
+
+		// Discard the card (remove from hand, add to discard pile, and add point)
+		void discardCard(Card card);
 
         // Update total score by adding the round score
         void updateScore();

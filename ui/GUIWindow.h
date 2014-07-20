@@ -8,6 +8,7 @@
 #include <gtkmm/button.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/frame.h>
+#include <gtkmm/dialog.h>
 #include <vector>
 #include "DeckGUI.h"
 

@@ -48,6 +48,8 @@ GUIWindow::GUIWindow() :
     }
     handFrame_.add(hand_);
     layout.add(handFrame_);
+
+	Gtk::Dialog temp("HI", *this, true, true);
     add(layout);
 
     show_all();

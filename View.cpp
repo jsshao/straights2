@@ -100,12 +100,17 @@ void View::update() {
         }
     }
 
-	vector<int> scores = model_->getScores();
-	for (int i = 0; i < scores.size(); i++) {
-		std::ostringstream oss;
-		oss << scores[i];
-		points[i].set_text(oss.str()+" points");
-	}	
+	if (model_->gameStarted()) {
+		vector<int> scores = model_->getScores();
+		vector<vector<Card> > Discards = model_->getDiscards();
+		for (int i = 0; i < scores.size(); i++) {
+			std::ostringstream oss, oss2;
+			oss << scores[i];
+			points[i].set_text(oss.str()+" points");
+			oss2 << Discards[i].size();
+			discards[i].set_text(oss.str()+" points");
+		}	
+	}
 }
 
 void View::startClicked() {

@@ -166,6 +166,15 @@ vector<int> Game::scores() const {
 	return scores;
 }
 
+vector<vector<Card> > Game::discards() const {
+	vector<vector<Card> > Discards;
+	for (size_t i = 0; i < players_.size(); i++) {
+		Discards.push_back(players_[i]->getDiscards());
+	}
+	
+	return Discards;
+}
+
 vector<Card> Game::getTable() const {
     return table_;
 };

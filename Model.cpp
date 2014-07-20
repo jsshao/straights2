@@ -4,15 +4,14 @@
 #include <iostream>
 using namespace std;
 
-Model::Model() : turn_(0), seed_(0), newGame(NULL) {
+Model::Model() : turn_(0), seed_(0), message_(""), newGame(NULL) {
 	for (int i = 0; i < numOfPlayers; i++) {
 		isComputer_[i] = false;	
 	} 
 }
 
 Model::~Model() {
-	if (newGame != NULL) {
-		delete newGame;
+	if (newGame != NULL) { delete newGame;
 	}
 }
 
@@ -64,7 +63,16 @@ bool Model::isPlayerComputer(const int player) const {
 } 
 
 std::vector<int> Model::getScores() const {
-	return newGame->scores();
+	if (newGame != NULL) {
+		return newGame->scores();
+	} else {
+		vector<int> empty;
+		return empty;
+	}
+}
+
+std::vector<vector<Card> > getDiscards() const {
+	return newGame->discards();
 }
 
 std::vector<int> Model::getWinners() const {
@@ -85,4 +93,14 @@ vector<Card> Model::getTable() const {
 
 vector<Card> Model::getCurHand() const {
     return newGame->getHand(currentPlayer());
+}
+
+void Model::setMessage(string msg) {
+	message_ = msg;
+	notify();
+	message_ = "";
+}
+
+string Model::getMessage() const {
+	return message_;
 }

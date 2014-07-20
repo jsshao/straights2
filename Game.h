@@ -42,6 +42,9 @@ public:
 	// Get the scores
 	std::vector<int> scores() const;
 
+	// Get the discards
+	std::vector<vector<Card> > discards() const;
+
 	// Choose the starting player (8S)
     int startingPlayer() const;
 
