@@ -27,7 +27,8 @@ public:
     // Print out the contents of the deck
     void printDeck() const;
 
-    void Game::play();
+    void play(Card c);
+    void playAI();
 
 	// Let a Player rageQuit
 	void rageQuit(const int player);
@@ -61,6 +62,7 @@ private:
     std::vector<Player*> players_;
 
     int cur_player_;
+    bool is_computer[4];
 };
 
 #endif

@@ -13,6 +13,7 @@ Game::Game(bool isComputer[4]) {
     deck_.shuffle();
     
     for (size_t i = 0; i < 4; i++) {
+        is_computer[i] = isComputer[i];
         if (isComputer[i] == false) {
             players_.push_back(new Player(new HumanStrategy));
         } else if (isComputer[i] == true) {
@@ -33,7 +34,6 @@ Game::~Game() {
     }
 }
 
-// Start the game until someone has won
 void Game::start() {
     while (!hasWon()) {
         newRound();
@@ -44,19 +44,30 @@ void Game::start() {
 	}
 }
 
-void Game::play() {
-    // Play a card or discard
-    try {
-        Card played = players_[cur_player_ - 1]->play(table_, *this);
-        table_.push_back(played);
-        cout << "Player " << cur_player_ << " plays " << played << "." << endl;
-    } catch (const Card& card) {
+void Game::play(Card c) {
+    // Play a card or discard TODO: for now it always plays the card (need to check and add discard)
+    table_.push_back(c);
+    cout << "Player " << cur_player_ << " plays " << c << "." << endl;
+    /*
         cout << "Player " << cur_player_ << " discards " << card << "." << endl;
-    } catch (const RageQuit& rq) {
         cout << "Player " << cur_player_ << " ragequits. A computer will now take over." << endl;
-    }
+        */
+    cur_player_ = cur_player_ % 4 + 1;
+    playAI();
 }
 
+void Game::playAI() {
+    while (is_computer[cur_player_-1]) { 
+        try {
+            Card played = players_[cur_player_ - 1]->play(table_, *this);
+            table_.push_back(played);
+            cout << "Player " << cur_player_ << " plays " << played << "." << endl;
+        } catch (const Card& card) {
+            cout << "Player " << cur_player_ << " discards " << card << "." << endl;
+        } 
+        cur_player_ = cur_player_ % 4 + 1;
+    }
+}
 
 // Play a new round of Straights
 void Game::newRound() {
@@ -161,4 +172,8 @@ vector<Card> Game::getTable() const {
 
 vector<Card> Game::getHand(int who) const {
     return players_[who-1]->getHand();
+}
+
+int Game::curPlayer() const {
+    return cur_player_;
 }
