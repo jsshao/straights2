@@ -1,11 +1,3 @@
-/*
- *  Deck.cc
- *  
- *
- *  Created by Caroline Kierstead on 25/05/09.
- *  Copyright 2009 UW. All rights reserved.
- *
- */
 #include "DeckGUI.h"
 #include <algorithm>
 #include <iterator>

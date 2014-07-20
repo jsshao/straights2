@@ -16,19 +16,16 @@ public:
     // Destructor
     ~Game();
 
-    // Start the game
-    void start(); 
-
     // Start a new round of straights
     void newRound();
 
     // Called at the end of a round
     void endRound();
 
-    // Print out the contents of the deck
-    void printDeck() const;
+    // Human plays a card
+	void play(Card c);
 
-    void play(Card c);
+	// The AI plays a card
     void playAI();
 
 	// Determine if game is over
@@ -46,13 +43,22 @@ public:
 	// Choose the starting player (8S)
     int startingPlayer() const;
 
+	// Gets the state of the current table
     std::vector<Card> getTable() const;
 
+	// Gets the hand of a player
     std::vector<Card> getHand(int who) const;
 
+	// Returns who the current player is
     int curPlayer() const;
+
+	// Determins whether playing card C is legal
     bool isLegalMove(Card c) const;
+
+	// Determines if player has a legal non-discarding move
     bool hasLegalMove() const;
+
+	// Turns from Human to Computer
     void rageQuit();
 
 private:
@@ -61,15 +67,22 @@ private:
 
     // Cards on the table
     std::vector<Card> table_;
+
+	// Legal moves
     int high[4];
     int low[4];
     int turns_;
+
     // Vector of players
     std::vector<Player*> players_;
 
+	// Current player index
     int cur_player_;
+
+	// Whether the players are computer or human
     bool is_computer[4];
 	
+	// Model member to print dialog messages
 	Model *model_;
 };
 

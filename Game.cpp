@@ -8,6 +8,7 @@
 #include "Player.h"
 using namespace std;
 
+// Returns whether card is a legal move in the situation of the table and hand
 bool Game::isLegalMove(Card card) const {
     if (card.getRank() == SEVEN and card.getSuit() == SPADE)
         return true;
@@ -42,16 +43,7 @@ Game::~Game() {
     }
 }
 
-void Game::start() {
-    while (!hasWon()) {
-        newRound();
-    }
-	vector<int> winners = winner(); 
-    for (size_t i = 0; i < winners.size(); i++) {
-		cout << "Player " << winners[i] << " wins!" << endl;
-	}
-}
-
+// Determines whether player has a non-discarding move or not
 bool Game::hasLegalMove() const {
     vector<Card> hand = getHand(cur_player_);
     for (size_t i = 0; i < hand.size(); i++) {
@@ -61,8 +53,8 @@ bool Game::hasLegalMove() const {
     return false;
 }
 
+// Plays/Discard a card based on human button clicks
 void Game::play(Card c) {
-    // Play a card or discard TODO: for now it always plays the card (need to check and add discard)
     if (isLegalMove(c)) {
         table_.push_back(c);
         int suit = (int)c.getSuit();
@@ -85,12 +77,14 @@ void Game::play(Card c) {
     playAI();
 }
 
+// Ragequits into computer mode
 void Game::rageQuit() {
     is_computer[cur_player_ - 1] ^= 1;
     cout << "Player " << cur_player_ << " ragequits. A computer will now take over." << endl;
     playAI(); 
 }
 
+// AI will decide to play first legal card of discard first card in hand
 void Game::playAI() {
     while (is_computer[cur_player_-1] and turns_ < 52) { 
         try {
@@ -171,12 +165,6 @@ void Game::endRound() {
 		model_->setMessage(ss.str());
 		model_->endGame();
 	}
-}
-
-
-// Print out the entire deck
-void Game::printDeck() const {
-    cout << deck_ << endl;
 }
 
 // Find the starting player with seven of spades
