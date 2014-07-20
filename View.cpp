@@ -109,7 +109,7 @@ void View::update() {
 			oss << scores[i];
 			points[i].set_text(oss.str()+" points");
 			oss2 << Discards[i].size();
-			discards[i].set_text(oss.str()+" points");
+			discards[i].set_text(oss2.str()+" discards");
 		}	
 	}
 
