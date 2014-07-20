@@ -99,6 +99,13 @@ void View::update() {
             hand_cards[i]->set(card_manager.getCard(hand[i].getRank(), hand[i].getSuit())); 
         }
     }
+
+	vector<int> scores = model_->getScores();
+	for (int i = 0; i < scores.size(); i++) {
+		std::ostringstream oss;
+		oss << scores[i];
+		points[i].set_text(oss.str()+" points");
+	}	
 }
 
 void View::startClicked() {
