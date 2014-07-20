@@ -105,7 +105,8 @@ void Game::playAI() {
             cout << "Player " << cur_player_ << " plays " << played << "." << endl;
         } catch (const Card& card) {
             cout << "Player " << cur_player_ << " discards " << card << "." << endl;
-        } 
+    		players_[cur_player_ - 1]->discardCard(card);
+	    } 
         turns_++;
         cur_player_ = cur_player_ % 4 + 1;
     }
@@ -164,7 +165,13 @@ void Game::endRound() {
 	if (!hasWon()) {
 		newRound();
 	} else {
-		cout << " DONE" << endl;	
+		stringstream ss;
+		vector<int> winners = winner(); 
+    	for (size_t i = 0; i < winners.size(); i++) {
+			ss << "Player " << winners[i] << " wins!" << endl;
+		}
+		model_->setMessage(ss.str());
+		model_->endGame();
 	}
 }
 
