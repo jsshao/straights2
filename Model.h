@@ -16,7 +16,7 @@ public:
 	void togglePlayerType(const int player);
 	bool isPlayerComputer(const int player) const;
 	std::vector<int> getScores() const;
-	std::vector<vector<Card> > getDiscards() const;
+	std::vector<std::vector<Card> > getDiscards() const;
 	std::vector<int> getWinners() const;
 	int startingPlayer() const;
     bool gameStarted() const;
@@ -24,14 +24,14 @@ public:
     std::vector<Card> getTable() const;
     std::vector<Card> getCurHand() const;
     void selectCard(int); 
-	void setMessage(string msg);
-	string getMessage() const;
+	void setMessage(std::string msg);
+    std::string getMessage() const;
 	
 private:
 	int turn_;
 	bool isComputer_[numOfPlayers];
 	long seed_;
-	string message_;
+    std::string message_;
     std::vector<int> winners_;
 	Game *newGame;
 };

@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include "Game.h"
@@ -7,6 +8,18 @@
 #include "ComputerStrategy.h"
 #include "RageQuit.h"
 using namespace std;
+
+bool Game::isLegalMove(Card card) const {
+    if (card.getRank() == SEVEN and card.getSuit() == SPADE)
+        return true;
+
+    if (players_[cur_player_ - 1 ]->hasCard(Card(SPADE, SEVEN)))
+        return false;
+
+    cout << high[(int)card.getSuit()] <<" "<< low[(int)card.getSuit()] << endl;
+    return high[(int)card.getSuit()] == card.getRank() 
+        or low[(int)card.getSuit()] == card.getRank();
+}
 
 // Constructor- shuffles deck, intialize players as human/computer, and deal out cards
 Game::Game(bool isComputer[4]) {
@@ -25,6 +38,7 @@ Game::Game(bool isComputer[4]) {
         }
     }
     cur_player_ = startingPlayer();
+    newRound();
 }
 
 // Dynamically deallocate players
@@ -44,10 +58,32 @@ void Game::start() {
 	}
 }
 
+bool Game::hasLegalMove() const {
+    vector<Card> hand = getHand(cur_player_);
+    for (size_t i = 0; i < hand.size(); i++) {
+        if (isLegalMove(hand[i])) 
+            return true;
+    }
+    return false;
+}
+
 void Game::play(Card c) {
     // Play a card or discard TODO: for now it always plays the card (need to check and add discard)
-    table_.push_back(c);
-    cout << "Player " << cur_player_ << " plays " << c << "." << endl;
+    if (isLegalMove(c)) {
+        table_.push_back(c);
+        int suit = (int)c.getSuit();
+        if (c.getRank() == high[suit]) high[suit]++;
+        if (c.getRank() == low[suit]) low[suit]--;
+        cout << "Player " << cur_player_ << " plays " << c << "." << endl;
+        players_[cur_player_-1]->playCard(c);
+    } 
+    else if (!hasLegalMove()) {
+        players_[cur_player_-1]->discardCard(c);
+        cout << "Player " << cur_player_ << " discards " << c << "." << endl;
+    }
+    else return;
+
+
     /*
         cout << "Player " << cur_player_ << " discards " << card << "." << endl;
         cout << "Player " << cur_player_ << " ragequits. A computer will now take over." << endl;
@@ -61,6 +97,9 @@ void Game::playAI() {
         try {
             Card played = players_[cur_player_ - 1]->play(table_, *this);
             table_.push_back(played);
+            int suit = (int)played.getSuit();
+            if (played.getRank() == high[suit]) high[suit]++;
+            if (played.getRank() == low[suit]) low[suit]--;
             cout << "Player " << cur_player_ << " plays " << played << "." << endl;
         } catch (const Card& card) {
             cout << "Player " << cur_player_ << " discards " << card << "." << endl;
@@ -78,10 +117,15 @@ void Game::newRound() {
 
 	// Clear the table
 	table_.clear();
+    for (int i = 0; i < 4; i++) {
+        high[i] = SEVEN;
+        low[i] = SEVEN;
+    }
 
     int starter = startingPlayer();
 
     cout << "A new round begins. It's player " << starter << "'s turn to play." << endl; 
+    playAI();
 }
 
 void Game::endRound() {
