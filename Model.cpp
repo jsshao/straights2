@@ -30,13 +30,12 @@ void Model::startGame() {
 	}
 	srand48(seed_);
 	newGame = new Game(isComputer_, this);
-	turn_ = 1;
 
+	turn_ = 1;
 	notify();	
 }
 
 void Model::endGame() {
-	cout << "GOOD BYE";
 	if (newGame != NULL) {
 		delete newGame;
         newGame = NULL;
