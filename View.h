@@ -13,10 +13,15 @@
 #include "Controller.h"
 #include "Model.h"
 
-class View : public Gtk::Window {
+class View : public Gtk::Window, public Observer {
 public:
     View(Controller *c, Model *m);
     virtual ~View();
+    virtual void update();
+    virtual void startClicked();
+    virtual void endClicked();
+    virtual void cardClicked(int which);
+    virtual void switchClicked(int which);
 protected:
     Controller *controller_;
     Model *model_;
