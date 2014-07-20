@@ -32,7 +32,7 @@ void Model::startGame() {
 	endGame();
     ended = false;
 	srand48(seed_);
-	newGame = new Game(isComputer_, this);
+	newGame = new Game(isComputer_, this, seed_);
     turn_ = 1;
     if (ended) endGame();
 	notify();	

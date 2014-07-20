@@ -12,7 +12,7 @@ class Model;
 class Game {
 public:
     // Constructor
-    Game(bool *, Model *);
+    Game(bool *, Model *, const long seed);
 
     // Destructor
     ~Game();

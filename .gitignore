@@ -3,3 +3,4 @@
 *.o
 straights
 ui/ui
+log.txt

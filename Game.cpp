@@ -21,10 +21,10 @@ bool Game::isLegalMove(Card card) const {
 }
 
 // Constructor- shuffles deck, intialize players as human/computer, and deal out cards
-Game::Game(bool isComputer[4], Model *model) : model_(model) {
+Game::Game(bool isComputer[4], Model *model, const long seed) : model_(model) {
     deck_.shuffle();
     fs.open("log.txt", fstream::out | fstream::app);
-    fs << "A new game has begun." << endl;
+    fs << "Started new game with seed " << seed << "." << endl;
     
     for (size_t i = 0; i < 4; i++) {
         is_computer[i] = isComputer[i]; players_.push_back(new Player()); 
