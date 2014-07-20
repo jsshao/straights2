@@ -17,7 +17,8 @@ Model::~Model() {
 }
 
 void Model::selectCard(int index) {
-    
+    newGame->play(getCurHand()[index]);
+    notify();
 }
 
 void Model::startGame() {
