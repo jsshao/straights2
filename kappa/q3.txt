@@ -1,0 +1,67 @@
+3 a)
+Results from running uniprocessor executable with argument of 10000000
+----------------------------------------------------------------------
+shared:16220387 
+shared:16245727 
+shared:20000000 
+shared:15049010
+shared:17486403
+shared:17442282
+shared:16245545
+shared:20000000 
+shared:17435477 
+shared:18743479 
+
+Results from running multiprocessor executable with argument 10000000 
+----------------------------------------------------------------------
+shared:11056638
+shared:12607027 
+shared:12127433
+shared:10765225
+shared:13370571
+shared:10310601
+shared:13147150 
+shared:12226328
+shared:10834150
+shared:11518853
+
+  b)
+    Clearly from the results, all 10 runs from both versions must NOT produce
+    the exactly same results every time. This is because the program unsafely
+    accesses and modifies a shared counter. This is due to the fact that the
+    '+=' operator is not an atomic instruction. It is split into reading the
+    value, incrementing the value then writing it.
+
+    However, it is possible for one task to read the value then suddenly stop
+    running and run the other task. Let's say task2 runs for a while and
+    increments the counter a couple times. When task1 runs again, it will
+    increment the OLD value before task2 updated it. Then, it will write
+    that into the counter. This means all of the increments performed by task2
+    were lost.
+
+    This race condition can happen multiple times during the execution and
+    is dependent on the timing and how the OS schedules the tasks.
+    Because of this, each output in the result does not have to be the same.
+
+  c)
+    The largest possible value for running this program with input 10000000 is
+    20000000. This is not hard to see because there are at most 10000000 increments
+    per task and there are two tasks. Therefore, the maximum value is 20000000.
+    A possible scheduling to produce this maximum would be if task1 incremented
+    10000000 times then task2 incremented 10000000 times after task1.
+
+    The smallest possible value for running this program with input 10000000 is
+    2. We know the value of the shared counter must be non-negative. I will
+    prove my answer by showing that 2 is possible and 1 and 0 are not possible.
+    
+    A possible solution for final result of 2: Let task1 run the first read 
+    instruction which reads in 0. Then, have task2 run increment 9999999 times.
+    Let task1 increment the value of 0 and write it. Let task2 run its last
+    increment which will read in a 1. Then, let task1 finish running by the 
+    remaining increments. Finally, task2 will increment the value of 1 and write
+    it. Therefore, the final value of the counter is 2.
+
+    A final value of 1 is impossible because consider the last increment. It
+    must have read in a value of 0. This is impossible because we know the other
+    task and itself have run the write instruction many times and each write is 
+    at least 1.

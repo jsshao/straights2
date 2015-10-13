@@ -1,0 +1,3 @@
+#include "q2player.h"
+using namespace std;
+
