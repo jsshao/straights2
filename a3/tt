@@ -1,0 +1,28 @@
+148148ADHADHADE14890FGHADEABAB14890FGHADE14890ABCDH148FGH148CDH148148ADHADHADE14890148FGHADHADECDE1489014890AB148FGHADHFGH148CDHADEAB14890AB148FGHADHADECDEAB1489014890148FGHFGHCDH148148ADHCDH148148ADH148ADHADHADEABAB14890
+
+
+
+
+FGH consumer who was waiting unblocked
+
+ADE consumer begins (not in use), empty so wait
+
+CDE consumer unbarged, empty so wait
+
+AB consumer waits on barging
+
+14 producer begins (not in use)
+
+890 produces, unblocks
+
+AB consumer waits on barging
+
+FGH consumer consumes
+
+14 producer begins (not in use)
+
+890 produces, unblocks
+
+CDH consumer unbarged, not empty
+
+FGH consumer who was waiting got barged

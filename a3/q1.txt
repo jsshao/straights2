@@ -1,0 +1,21 @@
+b) i) 
+     /usr/bin/time -f "%Uu %Ss %E" ./mergesort -t  100000000 0
+        15.66u 0.63s 0:16.25
+     /usr/bin/time -f "%Uu %Ss %E" ./mergesort -t  100000000 1
+        15.81u 0.85s 0:09.16
+     /usr/bin/time -f "%Uu %Ss %E" ./mergesort -t  100000000 2
+        16.91u 0.46s 0:05.69
+     /usr/bin/time -f "%Uu %Ss %E" ./mergesort -t  100000000 3
+        20.71u 0.44s 0:04.36
+     /usr/bin/time -f "%Uu %Ss %E" ./mergesort -t  100000000 4
+        29.42u 0.76s 0:04.23
+     /usr/bin/time -f "%Uu %Ss %E" ./mergesort -t  100000000 5
+        53.49u 1.39s 0:04.33
+     /usr/bin/time -f "%Uu %Ss %E" ./mergesort -t  100000000 6
+        293.93u 1.89s 0:09.59
+
+ii) 
+    The user time takes longer as the depth used increases. The actual time decreases when we increase the depth (add more threads), until a certain point (depth=5) when we stop seeing gains in performance. In fact, at depth=5, the actual time is slightly longer than the actual time taken for depth=4. Then at depth=6, the actual time significantly increases compared with depth=5. The user time also significantly increases at depth=6.  
+    
+iii)
+    As we increase the number of threads, the user time increases strictly. This is because although concurrency can reduce the actual time by running threads on multiple cores, the total time taken by all the threads is strictly greater (in part due to overhead of creating and synchronizing threads). We get a performance (in terms of actual time) benefit when we increase the number of threads until we reach a depth of 5. I believe this is due to the diminishing returns of increasing concurrency due to the increasing cost of overhead required for concurrency. It appears that roughly 4.2 seconds is as fast as we can make this program for this particular test case, and increasing depth from 4 to 5 does not improve this time (and actually slows it down slightly because of the extra overhead). When the depth is increased to 6, there is a significant slow down and performance hit. The user time and actual time both spike significantly. I believe this is due to the fact that a depth of 6 means that there are 2^6 = 64 threads used, and the linux.student.cs.uwaterloo.ca environment uses 48 cores. At a depth of 5, there are 2^5 = 32 threads used and each thread can still be allocated to one core. At a depth of 6, the threads need to be time sliced, which causes a huge performance hit due to the overhead of context switching.

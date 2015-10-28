@@ -1,0 +1,26 @@
+b. i)
+    Inputs: 50 55 20000 30 10
+
+    Single Core
+        No optimization:
+            busy: 3.33s user time
+            nobusy: 4.40s user time
+
+        O2 optimization:
+            busy: 3.12s user time
+            nobusy: 4.12s user time
+ii) 
+    The busy waiting solution was roughly a second faster than the no busy waiting solution, and the optimization sligthly improved the user time, but not by much. 
+
+iii)
+    The no busy waiting solution was actually slower than the busy waiting solution for both optimization levels. I believe this is because the no busy waiting solution requires an additional condition variable (and additional blocking of tasks on this variable), which increases overhead such that it's faster to just spin (busy wait). In this single core case, there is not much contention so there is not much barging, so there isn't much spinning anyway. O2 optimization does speed it up a little bit compared with no optimization, but it isn't a significant difference so there isn't much to discuss (the compiler probably optimized some small things like branch prediction).
+
+
+iv)
+    4 cores, no optimization
+        busy: 118.77 user time
+        nobusy: 112.01 user time
+v)
+    With 4 cores, the no busy waiting solution is faster than the busy waiting solution (for uniprocessor execution, the busy waiting solution was faster). Additionally, the total user time is significantly increased compared to the uniprocessor execution.
+
+vi) When there are 4 cores and threads run concurrently, there is much more contention. I believe that the reason the program takes much longer to run is because of the increased contention causing the slowdown. The no busy waiting solution is faster because there is more contention (leading to more barging), so the while() loop in the busy waiting solution has to spin more, to the extent that it is better to use the no busy waiting solution. 
